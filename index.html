@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Android Development Environment</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #1e1e1e;
+        color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        overflow: hidden;
+        height: 100vh;
+      }
+
+      #app-container {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        height: 100vh;
+      }
+
+      #toolbar {
+        background: #2d2d2d;
+        padding: 10px;
+        display: flex;
+        gap: 10px;
+        border-bottom: 1px solid #3e3e3e;
+      }
+
+      #main-container {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        overflow: hidden;
+      }
+
+      #sidebar {
+        background: #252526;
+        border-right: 1px solid #3e3e3e;
+        overflow-y: auto;
+      }
+
+      #content-container {
+        display: grid;
+        grid-template-rows: 1fr auto;
+        overflow: hidden;
+      }
+
+      #editor-container {
+        overflow: hidden;
+      }
+
+      #terminal-container {
+        display: flex;
+        flex-direction: column;
+        height: 300px;
+        border-top: 1px solid #3e3e3e;
+      }
+
+      .tabs {
+        display: flex;
+        background: #2d2d2d;
+        padding: 5px;
+        gap: 5px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .tab {
+        padding: 8px 15px;
+        background: #3d3d3d;
+        border: none;
+        border-radius: 3px;
+        color: #ffffff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .tab.active {
+        background: #4d4d4d;
+      }
+
+      .tab-close {
+        color: #888;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .tab-close:hover {
+        background: #666;
+        color: #fff;
+      }
+
+      .new-terminal-btn {
+        padding: 8px 15px;
+        background: #2d2d2d;
+        border: 1px solid #3e3e3e;
+        border-radius: 3px;
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      .terminal {
+        display: none;
+        flex-direction: column;
+        flex-grow: 1;
+        background: #1e1e1e;
+      }
+
+      .terminal.active {
+        display: flex;
+      }
+
+      .output {
+        flex-grow: 1;
+        padding: 10px;
+        overflow-y: auto;
+        font-family: monospace;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .input-container {
+        display: flex;
+        align-items: center;
+        background: #2d2d2d;
+        padding: 5px;
+        border-radius: 3px;
+      }
+
+      .current-directory {
+        color: #4ec9b0;
+        margin-right: 10px;
+        padding: 5px;
+        font-family: monospace;
+      }
+
+      .command-input {
+        flex-grow: 1;
+        padding: 8px;
+        background: #2d2d2d;
+        color: #ffffff;
+        border: none;
+        outline: none;
+        font-family: monospace;
+      }
+
+      .toolbar-button {
+        padding: 8px 15px;
+        background: #3d3d3d;
+        border: none;
+        border-radius: 3px;
+        color: #ffffff;
+        cursor: pointer;
+      }
+
+      .toolbar-button:hover {
+        background: #4d4d4d;
+      }
+
+      #file-tree {
+        padding: 10px;
+      }
+
+      .file-item {
+        padding: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .file-item:hover {
+        background: #2d2d2d;
+      }
+
+      .folder-icon::before {
+        content: "📁";
+      }
+
+      .file-icon::before {
+        content: "📄";
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.js"></script>
+  </head>
+  <body>
+    <div id="app-container">
+      <div id="toolbar">
+        <button onclick="window.newFile()">New File</button>
+        <button onclick="window.openFile()">Open File</button>
+        <button onclick="window.saveFile()">Save File</button>
+        <button onclick="window.createAndroidProject()">
+          Create Android Project
+        </button>
+        <button onclick="window.buildAndDeploy()">Build & Deploy</button>
+      </div>
+      <div id="main-container">
+        <div id="sidebar">
+          <div id="file-tree"></div>
+        </div>
+        <div id="content-container">
+          <div id="editor-container"></div>
+          <div id="terminal-container">
+            <div class="tabs">
+              <button class="new-terminal-btn" onclick="createNewTerminal()">
+                + New Terminal
+              </button>
+            </div>
+            <div id="terminals"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="renderer.js"></script>
+  </body>
+</html>
