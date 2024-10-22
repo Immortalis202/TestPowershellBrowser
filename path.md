@@ -48,6 +48,10 @@ run the emu
 ```ps
 .\emulator.exe -avd test
 ```
+correct path for sdkmanager and avdmanager
+```md
+C:\Users\LucaMalegori\AppData\Local\Android\Sdk\cmdline-tools\latest\bin
+```
 
 seems to be missing the sdk path to ENV
 
